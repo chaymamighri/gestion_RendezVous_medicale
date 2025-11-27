@@ -1,0 +1,109 @@
+/* navbar style */
+.navbar {
+    display: flex;
+    align-items: center; 
+    background-color:white;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+.navbar div {
+    display: flex;
+    align-items: center; 
+}
+
+.navbar img {
+    height: 50px; 
+    margin-right: 20rem; 
+    margin-left: 2rem;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 1rem;
+}
+
+.navbar ul li {
+    margin: 0 15px;
+}
+
+.navbar ul li a {
+   
+    margin: 3rem;
+    text-decoration: none; 
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+
+.navbar .log_button {
+    text-transform: uppercase;
+    background-color: #0D6EFD; 
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: solid 1px #0D6EFD;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.navbar .booking_button {
+   text-transform: uppercase;
+    background-color: #0D6EFD; 
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.navbar .booking_button:hover {
+    border: solid 1px #031b3c;
+    transform: scale(1.05);
+}
+.navbar .log_button:hover {
+    border: solid 1px #2b0cdd;
+    transform: scale(1.05);
+}
+ 
+@media (max-width: 768px) {
+    /* Stack navbar items vertically on small screens */
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+    }
+
+    .navbar img {
+        margin-right: 0;
+    }
+
+    .navbar ul {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 10px;
+        padding: 0;
+    }
+
+    .navbar ul li {
+        margin: 10px 0;
+    }
+
+    .navbar ul li a {
+        margin: 0; /* Adjust link margin for better spacing on mobile */
+        font-size: 20px;
+    }
+
+    .navbar .log_button, .navbar .booking_button {
+        width: 100%; /* Make buttons full width on small screens */
+        margin-top: 10px;
+    }
+}

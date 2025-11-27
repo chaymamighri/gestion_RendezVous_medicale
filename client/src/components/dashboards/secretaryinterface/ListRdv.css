@@ -1,0 +1,104 @@
+h1 {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #014d98;
+  margin-top: 20px;
+}
+
+h2 {
+  font-size: 1.8rem;
+  color: #1c4c7c;
+  margin-bottom: 20px;
+}
+
+
+.table1 {
+  width: 100%; 
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table1 th, 
+.table1 td {
+  padding: 12px 15px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.head-table {
+  background: #2c3e50;
+  color: white;
+  font-weight: bold;
+}
+
+.table1 tbody tr:hover {
+  background: #f1f1f1;
+  transition: 0.3s;
+}
+
+.table1 td:nth-child(6) {
+  font-weight: bold;
+  color: #bdbd09; 
+}
+
+.table1 td:last-child {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+
+.btn-warning{
+  background-color: #bdbd09;
+  color: rgb(5, 5, 5);
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn-edit {
+  background: #069f08;
+  color: white;
+  border: none;
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-edit:hover {
+  background-color: #1d5403;
+}
+
+.btn-cancel {
+  background: #f5240c;
+  color: white;
+  border: none;
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-warning:hover {
+  background: #848403;
+}
+
+.btn-cancel:hover {
+  background: #911c0a;
+}
+
+@media (max-width: 768px) {
+  .table1 th, 
+  .table1 td {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+  
+

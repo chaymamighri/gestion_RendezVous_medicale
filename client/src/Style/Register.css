@@ -1,0 +1,46 @@
+
+  .title-h1 {
+    font-size: 2.5rem; 
+    font-weight: bold; 
+    color: #0458b1; 
+    text-align: center;
+    margin-top: 70px; 
+    margin-bottom: 20px; 
+    letter-spacing: 0.5px; 
+  }
+
+  .secrétaire-btn {
+    padding: 10px 16px;
+    color: black;
+    font-weight: bold;
+    background-color: #07930b; 
+    margin-left: 110px;
+  }
+  
+  .secrétaire-btn:hover {
+    background-color: #0d7f12;
+  }
+  
+
+  .doctor-btn {
+    color: black;
+    font-weight: bold;
+    padding: 10px 27px;
+    background-color: #5a2aae; 
+  }
+  
+  .doctor-btn:hover {
+    background-color: #4f27c9; 
+  }
+  .text-danger {
+    text-align: center;
+    color: #ff4d4d; 
+    font-size: 14px; 
+    font-weight: bold; 
+    border: 1px solid #ffcccc;
+    background-color: #ffe6e6; 
+    padding: 8px 12px; 
+    border-radius: 5px;
+    margin-top: 10px; 
+  }
+  
