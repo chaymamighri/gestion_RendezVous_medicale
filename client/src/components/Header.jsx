@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo2 from "../images/logo2.jpg";
+import logo from "../images/logo1.png";
 import "../Style/Header.css";
 
 function Header() {
@@ -7,7 +7,7 @@ function Header() {
     <>
       <nav className="navbar">
         <div>
-          <img src={logo2} alt="logo du cabinet" className="logo_cabinet"></img>
+          <img src={logo} alt="logo du cabinet" className="logo_cabinet"></img>
           <ul>
             <li>
               <Link to="/">Home</Link>
