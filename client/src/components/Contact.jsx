@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -17,7 +17,7 @@ function Contact() {
     }
 
     axios
-      .post("http://localhost:3001/Messages", {
+      .post("/api/messages", {
         name,
         email,
         phone,

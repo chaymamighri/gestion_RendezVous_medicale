@@ -15,7 +15,7 @@ function UpdateAppointment() {
   useEffect(() => {
     const fetchAppointment = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/getAppointment/${id}`);
+        const response = await axios.get(`/api/getAppointment/${id}`);
         const data = response.data;
         setFirstName(data.firstName);
         setLastName(data.lastName);
@@ -29,11 +29,11 @@ function UpdateAppointment() {
     };
 
     fetchAppointment();
-  }, []);
+  }, [id]);
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    axios.put(`http://localhost:3001/updateAppointment/${id}`, {
+    axios.put(`/api/updateAppointment/${id}`, {
         firstName,
         lastName,
         contact,

@@ -7,7 +7,7 @@ function Messages() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/getMessages")
+      .get("/api/messages")
       .then((response) => {
         setMessages(response.data);
       })

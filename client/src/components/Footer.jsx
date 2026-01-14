@@ -1,4 +1,3 @@
-import React from "react";
 import '../Style/Footer.css'
 
 function Footer() {
@@ -30,25 +29,7 @@ function Footer() {
           <p>📧 <strong>Email:</strong>  contact@medicare.com</p>
         </div>
       </div>
-    
-           {/*<div className="footer-section newsletter">
-            <h2 className="connect_section">Stay Connected</h2>
-            
-           <form className="newsletter-form">
-             
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="newsletter-input"
-                required
-              />
-             
-              <button type="submit" className="newsletter-button">
-                <a href="/register">Subscribe</a>
-              </button>
-            </form>
-          </div>*/}
-          
+  
           <div className="copyright">
         <p>© {new Date().getFullYear()} Online Medical Appointment. All rights reserved.</p>
       </div>

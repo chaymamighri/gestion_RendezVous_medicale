@@ -23,7 +23,7 @@ function Register() {
     }
     setError("");
 
-    axios.post("http://localhost:3001/register", {name, email, password, role })
+    axios.post("/api/register", {name, email, password, role })
       .then((result) => { console.log(result);
         navigate("/Login");
       })

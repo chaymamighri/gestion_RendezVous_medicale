@@ -1,5 +1,4 @@
 
-import React, { useState, useEffect } from 'react';
 import "./secretary.css";
 import SecretaryMenu from './SecretaryMenu';
 import SecretarHome from './SecretaryHome';

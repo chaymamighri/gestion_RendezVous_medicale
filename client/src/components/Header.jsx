@@ -25,7 +25,7 @@ function Header() {
             </li>
             <li>
               <button className="booking_button">
-                <Link to="/Booking">Book An Appointment</Link>
+                <Link to="/Register">S'inscrire</Link>
               </button>
             </li>
           </ul>

@@ -15,11 +15,6 @@ function SecretaryMenu() {
           <i className="fas fa-calendar-check"></i> Add Appointment
         </Link>
       </li>
-      {/*<li>
-        <Link to="/patients">
-          <i className="fas fa-user-cog"></i> Manage Availability
-        </Link>
-      </li>*/}
       <li>
         <Link to="/Messages">
           <i className="fas fa-envelope"></i> Show Messages

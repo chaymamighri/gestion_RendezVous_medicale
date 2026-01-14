@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./ListRdv.css";
-import SecretaryMenu from "./SecretaryMenu";
 import "./Secretary.css";
 
 function ListRdv() {
@@ -16,7 +15,7 @@ function ListRdv() {
 
   const fetchAppointments = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/bookings");
+      const response = await axios.get("/api/bookings");
       setAppointments(response.data);
       setError("");
     } catch (error) {
@@ -28,7 +27,7 @@ function ListRdv() {
   const confirmAppointment = async (id) => {
     try {
       //patch : faire une modification partiel du donnee comme le status dnas ce cas./*put remplacer tout les donnee  */
-      await axios.patch(`http://localhost:3001/confirmAppointment/${id}`, {
+      await axios.patch(`/api/confirmAppointment/${id}`, {
         status: "confirmed",
       });
 
@@ -48,7 +47,7 @@ function ListRdv() {
 
   const handleDeleteAppointment = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/deleteAppointment/${id}`);
+      await axios.delete(`/api/deleteAppointment/${id}`);
       fetchAppointments();
     } catch (error) {
       console.error("Erreur lors de la suppression du rendez-vous:", error);

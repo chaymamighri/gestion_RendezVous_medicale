@@ -21,19 +21,23 @@ function Login() {
     }
 
     try {
-      const res = await axios.post("http://localhost:3001/login", { email, password,});
- 
-     
+      const res = await axios.post("/api/login", { email, password });
+
       const { role, token } = res.data;
-      localStorage.setItem("token", token);
+      if (token) localStorage.setItem("token", token);
      
      
 
-      if (role === "Secretary") navigate("/dashboards/secretaryinterface/secretaryDashboard");
-      else if (role === "Doctor") navigate("/dashboards/doctorinterface/doctorDashboard");
-      //else if (role === "Patient") navigate("/dashboards/patientinterface/patientDashboard");
+      if (role === "Secretary") navigate("/dashboards/secretaryinterface/SecretaryDashboard");
+      else if (role === "Doctor") navigate("/dashboards/doctorinterface/DoctorDashboard");
     } catch (error) {
-      setError("Invalid email or password. Please try again.");
+      if (error?.code === "ERR_NETWORK" || !error?.response) {
+        setError("Server unreachable. Please start the backend and try again.");
+      } else if (error?.response?.status === 401) {
+        setError("Invalid email or password. Please try again.");
+      } else {
+        setError("Login failed. Please try again.");
+      }
       console.error(error);
       
     }
