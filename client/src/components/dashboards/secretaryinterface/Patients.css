@@ -1,0 +1,116 @@
+.mpms-page {
+  padding: 0.25rem 0 1.5rem;
+  max-width: 1200px;
+  font-family: var(--mo-font);
+}
+
+.mpms-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.mpms-page-header h2 {
+  margin: 0;
+  font-family: var(--mo-display);
+  color: var(--mo-ink);
+  font-size: 1.6rem;
+}
+
+.mpms-subtitle {
+  margin: 0.25rem 0 0;
+  color: var(--mo-muted);
+  font-size: 0.95rem;
+}
+
+.mpms-search-bar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.mpms-state {
+  padding: 2rem;
+  text-align: center;
+  color: var(--mo-muted);
+  background: #fff;
+  border-radius: 10px;
+  border: 1px dashed var(--mo-line);
+}
+
+.mpms-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.mpms-form {
+  background: #fff;
+  border: 1px solid var(--mo-line) !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+}
+
+.mpms-dl {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 0.5rem 1rem;
+  margin: 0;
+}
+
+.mpms-dl dt {
+  font-weight: 600;
+  color: var(--mo-muted);
+}
+
+.mpms-dl dd {
+  margin: 0;
+  color: var(--mo-ink);
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-pending {
+  background: #fff7ed;
+  color: var(--mo-warning);
+}
+
+.status-confirmed {
+  background: #ecfdf3;
+  color: var(--mo-success);
+}
+
+.status-cancelled {
+  background: #fef3f2;
+  color: var(--mo-danger);
+}
+
+.card {
+  border-color: var(--mo-line) !important;
+  border-radius: 12px !important;
+}
+
+.card-title {
+  font-family: var(--mo-display);
+}
+
+@media (max-width: 768px) {
+  .mpms-search-bar {
+    flex-direction: column;
+  }
+
+  .mpms-dl {
+    grid-template-columns: 1fr;
+  }
+}

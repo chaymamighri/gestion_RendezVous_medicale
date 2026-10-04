@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
+import { useAuth } from "../context/AuthContext";
+import { getErrorMessage } from "../utils/format";
 import "../Style/Login.css";
-
-
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,47 +21,53 @@ function Login() {
       return;
     }
 
+    setLoading(true);
+    setError("");
+
     try {
-      const res = await axios.post("/api/login", { email, password });
+      const res = await api.post("/login", { email, password });
+      const { role, token, user } = res.data;
 
-      const { role, token } = res.data;
-      if (token) localStorage.setItem("token", token);
-     
-     
-
-      if (role === "Secretary") navigate("/dashboards/secretaryinterface/SecretaryDashboard");
-      else if (role === "Doctor") navigate("/dashboards/doctorinterface/DoctorDashboard");
-    } catch (error) {
-      if (error?.code === "ERR_NETWORK" || !error?.response) {
-        setError("Server unreachable. Please start the backend and try again.");
-      } else if (error?.response?.status === 401) {
-        setError("Invalid email or password. Please try again.");
-      } else {
-        setError("Login failed. Please try again.");
+      if (!token) {
+        setError("Login failed. No token received.");
+        return;
       }
-      console.error(error);
-      
+
+      login({ token, role, user });
+
+      if (role === "Secretary") {
+        navigate("/dashboards/secretaryinterface/SecretaryDashboard");
+      } else if (role === "Doctor") {
+        navigate("/dashboards/doctorinterface/DoctorDashboard");
+      } else {
+        setError("Unknown user role.");
+      }
+    } catch (err) {
+      if (err?.code === "ERR_NETWORK" || !err?.response) {
+        setError("Server unreachable. Please start the backend and try again.");
+      } else {
+        setError(getErrorMessage(err, "Login failed. Please try again."));
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-
-  <div className="container d-flex flex-column align-items-center vh-100">
-  <h1 className="title-h1"> Welcome Back </h1>
-  <div className="card p-5 shadow" style={{ maxWidth: "500px", width: "100%" }}>
-
-        <h2 className="text-center mb-4">Sign In here</h2>
-        
+    <div className="mo-auth">
+      <h1 className="mo-auth__title">Welcome back</h1>
+      <div className="mo-card">
+        <h2>Staff sign in</h2>
         <form onSubmit={handleSubmit}>
-       
           <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              <strong>Email:</strong>
+            <label htmlFor="email" className="mo-label">
+              Email
             </label>
             <input
               type="email"
               placeholder="Enter your email"
               name="email"
+              id="email"
               className="form-control"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -69,13 +76,14 @@ function Login() {
           </div>
 
           <div className="mb-3">
-            <label htmlFor="password" className="form-label">
-              <strong>Password:</strong>
+            <label htmlFor="password" className="mo-label">
+              Password
             </label>
             <input
               type="password"
               placeholder="Enter your password"
               name="password"
+              id="password"
               className="form-control"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -83,24 +91,26 @@ function Login() {
             />
           </div>
 
-          {error && <p className="error-message">{error}</p>} 
+          {error && <p className="error-message">{error}</p>}
 
-          <div className="d-grid mb-3">
-            <button type="submit" className="btn login-btn">
-              Login
-            </button>
-          </div>
+          <button
+            type="submit"
+            className="btn mo-btn mo-btn--primary w-100 mb-3"
+            disabled={loading}
+          >
+            {loading ? "Signing in..." : "Login"}
+          </button>
 
           <div className="text-center">
-            <p className="mb-0">New Here?</p>
-            <Link to="/Register" className="text-decoration-none">
-              Create an Account
+            <p className="mb-1 text-muted">New staff member?</p>
+            <Link to="/Register" className="mo-link">
+              Create an account
             </Link>
           </div>
         </form>
-    
-    </div>
+      </div>
     </div>
   );
 }
+
 export default Login;

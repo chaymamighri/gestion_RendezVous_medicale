@@ -1,51 +1,112 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+import PublicOnly from "./components/PublicOnly";
 import Home from "./components/Home";
 import Header from "./components/Header";
 import About from "./components/About";
 import Footer from "./components/Footer";
 import Register from "./components/Register";
 import Login from "./components/Login";
-import Contact from "./components/Contact";
 import Booking from "./components/Booking";
 import Doctor from "./components/dashboards/doctorinterface/DoctorDashboard";
-import Secretary from "./components/dashboards/secretaryinterface/SecretaryDashboard ";
+import DoctorLayout from "./components/dashboards/doctorinterface/DoctorLayout";
+import SecretaryLayout from "./components/dashboards/secretaryinterface/SecretaryLayout";
+import SecretaryHome from "./components/dashboards/secretaryinterface/SecretaryHome";
 import ListRdv from "./components/dashboards/secretaryinterface/ListRdv";
+import Patients from "./components/dashboards/secretaryinterface/Patients";
+import PatientForm from "./components/dashboards/secretaryinterface/PatientForm";
+import PatientDetails from "./components/dashboards/PatientDetails";
 import UpdateAppointment from "./components/UpdateAppointment";
-import Messages from "./components/dashboards/secretaryinterface/Messages";
-
 
 function App() {
   return (
-    <>
-      <div>
-        <BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <div className="app-shell">
           <Header />
-          <Routes>
-            <Route path="/" element={<Home />}></Route>
-            <Route path="/About" element={<About />}></Route>
-            <Route path="/Contact" element={<Contact />}></Route>
-            <Route path="/Register" element={<Register />}></Route>
-            <Route path="/Login" element={<Login />}></Route>
-            <Route path="/ListRdv" element={<ListRdv />}></Route>
-            <Route path="/Booking" element={<Booking />}></Route>
-            <Route path="/UpdateAppointment/:id" element={<UpdateAppointment/>}></Route>
-            <Route path="/Messages" element={<Messages/>}></Route>
-           
-            <Route
-              path="/dashboards/doctorinterface/DoctorDashboard"
-              element={<Doctor />}
-            ></Route>
-            <Route
-              path="/dashboards/secretaryinterface/SecretaryDashboard"
-              element={<Secretary />}
-            ></Route>
-          </Routes>
+          <div className="app-main">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/About" element={<About />} />
+
+              <Route
+                path="/Register"
+                element={
+                  <PublicOnly>
+                    <Register />
+                  </PublicOnly>
+                }
+              />
+              <Route
+                path="/Login"
+                element={
+                  <PublicOnly>
+                    <Login />
+                  </PublicOnly>
+                }
+              />
+
+              <Route
+                element={
+                  <ProtectedRoute roles={["Secretary"]}>
+                    <SecretaryLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route
+                  path="/dashboards/secretaryinterface/SecretaryDashboard"
+                  element={<SecretaryHome />}
+                />
+                <Route path="/ListRdv" element={<ListRdv />} />
+                <Route path="/Booking" element={<Booking />} />
+                <Route
+                  path="/UpdateAppointment/:id"
+                  element={<UpdateAppointment />}
+                />
+                <Route path="/patients" element={<Patients />} />
+                <Route path="/patients/new" element={<PatientForm />} />
+                <Route path="/patients/:id/edit" element={<PatientForm />} />
+                <Route path="/patients/:id" element={<PatientDetails />} />
+              </Route>
+
+              <Route
+                element={
+                  <ProtectedRoute roles={["Doctor"]}>
+                    <DoctorLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route
+                  path="/dashboards/doctorinterface/DoctorDashboard"
+                  element={<Doctor />}
+                />
+                <Route path="/doctor/appointments" element={<Doctor />} />
+                <Route path="/doctor/patients" element={<Patients />} />
+                <Route
+                  path="/doctor/patients/:id"
+                  element={<PatientDetails />}
+                />
+                <Route
+                  path="/doctor/schedule"
+                  element={
+                    <Navigate
+                      to="/dashboards/doctorinterface/DoctorDashboard"
+                      replace
+                    />
+                  }
+                />
+              </Route>
+
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </div>
           <Footer />
-        </BrowserRouter>
-      </div>
-    </>
+        </div>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

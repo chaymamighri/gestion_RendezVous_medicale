@@ -1,89 +1,156 @@
-  h1 {
-    font-size: 2.2rem;
-    font-weight: bold;
-    color: #014d98;
-    margin-top: 20px;
-  }
-  
-  h2 {
-    font-size: 1.8rem;
-    color: #1c4c7c;
-    margin-bottom: 20px;
-  }
-  
+.doctor-layout {
+  display: flex;
+  min-height: calc(100vh - 72px);
+  font-family: var(--mo-font);
+  background: var(--mo-cream);
+}
 
-  .table1 {
-    width: 100%; 
-    border-collapse: collapse;
-    margin-top: 20px;
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .table1 th, 
-  .table1 td {
-    padding: 12px 15px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .head-table {
-    background: #2c3e50;
-    color: white;
-    font-weight: bold;
-  }
-  
-  .table1 tbody tr:hover {
-    background: #f1f1f1;
-    transition: 0.3s;
+.doctor-sidebar {
+  width: 250px;
+  background: #fff;
+  border-right: 1px solid var(--mo-line);
+  padding: 1.5rem 1rem;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 72px);
+}
+
+.doctor-sidebar .sidebar__top {
+  flex: 1;
+}
+
+.doctor-sidebar h1 {
+  margin: 0 0 1.25rem;
+  font-family: var(--mo-display);
+  font-size: 1.35rem;
+  color: var(--mo-ink);
+}
+
+.doctor-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.doctor-sidebar li {
+  margin-bottom: 0.4rem;
+}
+
+.doctor-sidebar .sidebar__top a,
+.doctor-sidebar .doctor-menu a {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 0.7rem 0.75rem;
+  border-radius: 8px;
+  color: var(--mo-ink);
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  font-family: inherit;
+}
+
+.doctor-sidebar .sidebar__top a:hover,
+.doctor-sidebar .doctor-menu a:hover,
+.doctor-sidebar .sidebar__top a.active,
+.doctor-sidebar .doctor-menu a.active {
+  background: var(--mo-soft);
+  color: var(--mo-accent);
+}
+
+.doctor-sidebar .sidebar__footer {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--mo-line);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.doctor-sidebar .sidebar-user-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: var(--mo-soft);
+}
+
+.doctor-sidebar .sidebar-user-card__label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mo-muted);
+}
+
+.doctor-sidebar .sidebar-user-card__name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--mo-ink);
+  word-break: break-word;
+}
+
+.doctor-sidebar .sidebar-user-card__role {
+  font-size: 0.85rem;
+  color: var(--mo-accent);
+  font-weight: 600;
+}
+
+.doctor-sidebar .sidebar-logout {
+  width: 100%;
+  min-height: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid var(--mo-line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--mo-ink);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.doctor-sidebar .sidebar-logout:hover {
+  border-color: var(--mo-danger);
+  color: var(--mo-danger);
+  background: #fef3f2;
+}
+
+.doctor-main {
+  flex: 1;
+  overflow: auto;
+  padding: 1.5rem !important;
+}
+
+.consultation-panel {
+  position: sticky;
+  top: 1rem;
+  border: 1px solid var(--mo-line) !important;
+  border-radius: 12px !important;
+}
+
+.consultation-panel .text-primary,
+.consultation-panel h5,
+.consultation-panel h6 {
+  color: var(--mo-ink) !important;
+  font-family: var(--mo-display);
+}
+
+@media (max-width: 768px) {
+  .doctor-layout {
+    flex-direction: column;
   }
 
-  .table1 td:nth-child(6) {
-    font-weight: bold;
-    color: #bdbd09; 
+  .doctor-sidebar {
+    width: 100%;
+    min-height: auto;
   }
-
-  .table1 td:last-child {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-  }
-  
-  .btn-confirm {
-    background: #27ae60;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .btn-cancel {
-    background: #c0392b;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .btn-confirm:hover {
-    background: #219150;
-  }
-  
-  .btn-cancel:hover {
-    background: #a32c1c;
-  }
-
-  @media (max-width: 768px) {
-    .table1 th, 
-    .table1 td {
-      padding: 10px;
-      font-size: 14px;
-    }
-  }
-  
+}

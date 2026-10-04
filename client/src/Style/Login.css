@@ -1,42 +1,4 @@
-
-button {
-    text-decoration: none; 
-    border: none;
-    padding: 10px 16px;
-    border-radius: 10px; 
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  button a{
-    color: rgb(247, 245, 245);
-    text-decoration: none;
-   
-  }
-  
-  button:hover {
-    transform: scale(1.05); 
-  }
- 
-
-  .login-btn {
-    background-color: #0673e0; 
-    color: white;
-  }
-  
-  .login-btn:hover {
-    background-color: #1565c0; 
-  }
-  
-  /* Error Message Styling */
-.error-message {
-  color: #ff4d4f; /* A bright red color for visibility */
-  font-size: 14px; /* Adjust the font size */
-  font-weight: bold; /* Make the message stand out */
-  margin-top: 10px; /* Add some spacing above the error message */
-  text-align: center; /* Center the error message */
-  border: 1px solid #ff4d4f; /* Add a red border for emphasis */
-  padding: 8px; /* Add some padding for better appearance */
-  background-color: #fff1f0; /* Light red background for better visibility */
-  border-radius: 5px; /* Rounded corners */
+/* Login page uses shared theme classes from theme.css */
+.login-btn {
+  width: 100%;
 }
