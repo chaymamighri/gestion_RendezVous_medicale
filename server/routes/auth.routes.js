@@ -3,11 +3,13 @@ const router = express.Router();
 const UsersModel = require("../models/usersModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const auth = require("../middleware/auth");
+const { auth } = require("../middleware/auth");
+
+const ALLOWED_ROLES = ["Secretary", "Doctor"];
 
 const signToken = (user) =>
   jwt.sign(
-    { userId: user._id.toString(), role: user.role },
+    { userId: user._id.toString(), role: user.role, name: user.name },
     process.env.JWT_SECRET || "dev-jwt-secret",
     { expiresIn: "1d" }
   );
@@ -20,10 +22,20 @@ router.post(["/register", "/Register"], async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
+    if (!ALLOWED_ROLES.includes(role)) {
+      return res.status(400).json({ message: "Invalid role" });
+    }
+
+    if (String(password).length < 6) {
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 6 characters" });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await UsersModel.create({
-      name,
-      email,
+      name: String(name).trim(),
+      email: String(email).trim().toLowerCase(),
       password: hashedPassword,
       role,
     });
@@ -47,18 +59,24 @@ router.post(["/login", "/Login"], async (req, res) => {
       return res.status(400).json({ message: "Missing email or password" });
     }
 
-    const user = await UsersModel.findOne({ email });
+    const user = await UsersModel.findOne({
+      email: String(email).trim().toLowerCase(),
+    });
     if (!user) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
     const stored = user.password || "";
-    const isBcrypt = stored.startsWith("$2a$") || stored.startsWith("$2b$") || stored.startsWith("$2y$");
+    const isBcrypt =
+      stored.startsWith("$2a$") ||
+      stored.startsWith("$2b$") ||
+      stored.startsWith("$2y$");
 
     let ok = false;
     if (isBcrypt) {
       ok = await bcrypt.compare(password, stored);
     } else {
+      // One-time migration for legacy plain-text passwords
       ok = stored === password;
       if (ok) {
         user.password = await bcrypt.hash(password, 10);

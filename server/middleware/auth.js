@@ -7,7 +7,7 @@ const auth = (req, res, next) => {
     : null;
 
   if (!token) {
-    return res.status(401).json({ message: "Missing token" });
+    return res.status(401).json({ message: "Authentication required" });
   }
 
   try {
@@ -18,8 +18,18 @@ const auth = (req, res, next) => {
     req.user = payload;
     next();
   } catch {
-    return res.status(401).json({ message: "Invalid token" });
+    return res.status(401).json({ message: "Invalid or expired token" });
   }
 };
 
-module.exports = auth;
+const authorize = (...roles) => (req, res, next) => {
+  if (!req.user?.role) {
+    return res.status(401).json({ message: "Authentication required" });
+  }
+  if (!roles.includes(req.user.role)) {
+    return res.status(403).json({ message: "Access denied for this role" });
+  }
+  next();
+};
+
+module.exports = { auth, authorize };

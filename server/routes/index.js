@@ -3,10 +3,10 @@ const router = express.Router();
 
 const authRoutes = require("./auth.routes");
 const bookingRoutes = require("./bookingRoutes");
-const contactRoutes = require("./contactRoutes");
+const patientRoutes = require("./patientRoutes");
 
 router.use(authRoutes);
+router.use(patientRoutes);
 router.use(bookingRoutes);
-router.use(contactRoutes);
 
 module.exports = router;

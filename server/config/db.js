@@ -1,15 +1,12 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-//create connection data base
-mongoose.connect("mongodb://localhost:27017/users")
-    .then( 
-        ()=> {
-            console.log('connected to db');
-        }
-    )
-    .catch((err)=>{
-        console.log(err);
-        }
-    )
-    
+const uri = process.env.MONGODB_URI || "mongodb://localhost:27017/users";
 
+mongoose
+  .connect(uri)
+  .then(() => {
+    console.log("connected to db");
+  })
+  .catch((err) => {
+    console.error("MongoDB connection error:", err.message);
+  });
