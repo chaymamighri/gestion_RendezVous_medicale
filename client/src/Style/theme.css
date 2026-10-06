@@ -290,8 +290,14 @@ a {
 
 .head-table {
   background: var(--mo-ink) !important;
+}
+
+.table1 .head-table th {
+  background: var(--mo-ink) !important;
   color: #fff !important;
   font-weight: 600;
+  text-align: center;
+  padding: 0.85rem 1rem;
 }
 
 .table1 tbody tr:hover {

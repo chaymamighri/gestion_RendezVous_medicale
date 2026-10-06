@@ -18,10 +18,18 @@ function ListRdv() {
   const fetchAppointments = async () => {
     setLoading(true);
     setError("");
+
     try {
       const params = {};
-      if (statusFilter) params.status = statusFilter;
-      if (dateFilter) params.date = dateFilter;
+
+      if (statusFilter) {
+        params.status = statusFilter;
+      }
+
+      if (dateFilter) {
+        params.date = dateFilter;
+      }
+
       const response = await api.get("/bookings", { params });
       setAppointments(response.data);
     } catch (err) {
@@ -33,6 +41,7 @@ function ListRdv() {
 
   useEffect(() => {
     fetchAppointments();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter, dateFilter]);
 
@@ -40,36 +49,57 @@ function ListRdv() {
     try {
       await api.patch(`/confirmAppointment/${id}`);
       setSuccess("Appointment confirmed.");
+      setError("");
       fetchAppointments();
     } catch (err) {
-      setError(getErrorMessage(err, "Failed to confirm the appointment."));
+      setError(
+        getErrorMessage(err, "Failed to confirm the appointment.")
+      );
+      setSuccess("");
     }
   };
 
   const cancelAppointment = async (id) => {
-    if (!window.confirm("Cancel this appointment?")) return;
+    if (!window.confirm("Cancel this appointment?")) {
+      return;
+    }
+
     try {
       await api.patch(`/cancelAppointment/${id}`);
       setSuccess("Appointment cancelled.");
+      setError("");
       fetchAppointments();
     } catch (err) {
-      setError(getErrorMessage(err, "Failed to cancel the appointment."));
+      setError(
+        getErrorMessage(err, "Failed to cancel the appointment.")
+      );
+      setSuccess("");
     }
   };
 
-  const handleDeleteAppointment = async (id) => {
-    if (!window.confirm("Permanently delete this appointment?")) return;
-    try {
-      await api.delete(`/deleteAppointment/${id}`);
-      setSuccess("Appointment deleted.");
-      fetchAppointments();
-    } catch (err) {
-      setError(getErrorMessage(err, "Failed to delete the appointment."));
-    }
-  };
+
 
   const handleEdit = (id) => {
     navigate(`/UpdateAppointment/${id}`);
+  };
+
+  // Check whether the appointment date and time are already passed
+  const isAppointmentPast = (booking) => {
+    if (!booking.date || !booking.time) {
+      return false;
+    }
+
+    const appointmentDate = new Date(booking.date);
+
+    const year = appointmentDate.getFullYear();
+    const month = String(appointmentDate.getMonth() + 1).padStart(2, "0");
+    const day = String(appointmentDate.getDate()).padStart(2, "0");
+
+    const appointmentDateTime = new Date(
+      `${year}-${month}-${day}T${booking.time}`
+    );
+
+    return appointmentDateTime < new Date();
   };
 
   return (
@@ -77,8 +107,11 @@ function ListRdv() {
       <div className="mpms-page-header">
         <div>
           <h2>Appointments</h2>
-          <p className="mpms-subtitle">Manage the practice schedule</p>
+          <p className="mpms-subtitle">
+            Manage the practice schedule
+          </p>
         </div>
+
         <Link to="/Booking" className="btn btn-primary">
           New Appointment
         </Link>
@@ -89,6 +122,7 @@ function ListRdv() {
           <label className="form-label mb-1">
             <b>Status</b>
           </label>
+
           <select
             className="form-select"
             value={statusFilter}
@@ -100,10 +134,12 @@ function ListRdv() {
             <option value="cancelled">Cancelled</option>
           </select>
         </div>
+
         <div>
           <label className="form-label mb-1">
             <b>Date</b>
           </label>
+
           <input
             type="date"
             className="form-control"
@@ -111,8 +147,10 @@ function ListRdv() {
             onChange={(e) => setDateFilter(e.target.value)}
           />
         </div>
+
         {dateFilter && (
           <button
+            type="button"
             className="btn btn-outline-secondary"
             onClick={() => setDateFilter("")}
           >
@@ -121,11 +159,22 @@ function ListRdv() {
         )}
       </div>
 
-      {error && <div className="alert alert-danger">{error}</div>}
-      {success && <div className="alert alert-success">{success}</div>}
+      {error && (
+        <div className="alert alert-danger">
+          {error}
+        </div>
+      )}
+
+      {success && (
+        <div className="alert alert-success">
+          {success}
+        </div>
+      )}
 
       {loading ? (
-        <div className="mpms-state">Loading appointments...</div>
+        <div className="mpms-state">
+          Loading appointments...
+        </div>
       ) : (
         <div className="table-responsive">
           <table className="table1">
@@ -140,60 +189,87 @@ function ListRdv() {
                 <th>Actions</th>
               </tr>
             </thead>
+
             <tbody>
               {appointments.length > 0 ? (
-                appointments.map((booking, index) => (
-                  <tr key={booking._id}>
-                    <td>{index + 1}</td>
-                    <td>
-                      {booking.patient ? (
-                        <Link to={`/patients/${booking.patient._id}`}>
-                          {booking.firstName} {booking.lastName}
-                        </Link>
-                      ) : (
-                        `${booking.firstName} ${booking.lastName}`
-                      )}
-                    </td>
-                    <td>{booking.contact}</td>
-                    <td>{formatDate(booking.date)}</td>
-                    <td>{booking.time}</td>
-                    <td>
-                      <span className={`status-badge status-${booking.status}`}>
-                        {booking.status}
-                      </span>
-                    </td>
-                    <td className="mpms-actions">
-                      {booking.status === "pending" && (
-                        <button
-                          className="btn-warning"
-                          onClick={() => confirmAppointment(booking._id)}
+                appointments.map((booking, index) => {
+                  const isPast = isAppointmentPast(booking);
+
+                  return (
+                    <tr key={booking._id}>
+                      <td>{index + 1}</td>
+
+                      <td>
+                        {booking.patient ? (
+                          <Link
+                            to={`/patients/${booking.patient._id}`}
+                          >
+                            {booking.firstName} {booking.lastName}
+                          </Link>
+                        ) : (
+                          `${booking.firstName} ${booking.lastName}`
+                        )}
+                      </td>
+
+                      <td>{booking.contact}</td>
+
+                      <td>{formatDate(booking.date)}</td>
+
+                      <td>{booking.time}</td>
+
+                      <td>
+                        <span
+                          className={`status-badge status-${booking.status}`}
                         >
-                          Confirm
-                        </button>
-                      )}
-                      {booking.status !== "cancelled" && (
-                        <button
-                          className="btn-cancel"
-                          onClick={() => cancelAppointment(booking._id)}
-                        >
-                          Cancel
-                        </button>
-                      )}
-                      <button
-                        className="btn-edit"
-                        onClick={() => handleEdit(booking._id)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="btn-cancel"
-                        onClick={() => handleDeleteAppointment(booking._id)}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))
+                          {booking.status}
+                        </span>
+                      </td>
+
+                      <td className="mpms-actions">
+                        {/* Pending + future appointment */}
+                        {booking.status === "pending" && !isPast && (
+                          <button
+                            type="button"
+                            className="btn-warning"
+                            onClick={() =>
+                              confirmAppointment(booking._id)
+                            }
+                          >
+                            Confirm
+                          </button>
+                        )}
+
+                        {/* Pending/Confirmed + future appointment */}
+                        {booking.status !== "cancelled" && !isPast && (
+                          <button
+                            type="button"
+                            className="btn-cancel"
+                            onClick={() =>
+                              cancelAppointment(booking._id)
+                            }
+                          >
+                            Cancel
+                          </button>
+                        )}
+
+                        {/* Pending/Confirmed + future appointment */}
+                        {booking.status !== "cancelled" && !isPast && (
+                          <button
+                            type="button"
+                            className="btn-edit"
+                            onClick={() =>
+                              handleEdit(booking._id)
+                            }
+                          >
+                            Edit
+                          </button>
+                        )}
+
+                       
+                      </td>
+                    </tr>
+                  );
+                })
               ) : (
                 <tr>
                   <td colSpan="7" className="text-center">

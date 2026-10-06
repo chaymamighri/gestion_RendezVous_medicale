@@ -4,3 +4,52 @@
   font-family: var(--mo-display);
   color: var(--mo-ink);
 }
+.mpms-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.btn-action {
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-confirm {
+  background: #e8f5ee;
+  color: #067647;
+}
+
+.btn-confirm:hover {
+  background: #d1ebdc;
+}
+
+.btn-cancel {
+  background: #fdecec;
+  color: #b42318;
+}
+
+.btn-cancel:hover {
+  background: #f8d7d7;
+}
+
+.btn-edit {
+  background: #e8f1f5;
+  color: #0b3d4f;
+}
+
+.btn-edit:hover {
+  background: #d5e7ed;
+}
+
+.no-action {
+  color: #8a9aa1;
+  font-size: 0.9rem;
+}
