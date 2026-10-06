@@ -4,10 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicOnly from "./components/PublicOnly";
-import Home from "./components/Home";
 import Header from "./components/Header";
-import About from "./components/About";
-import Footer from "./components/Footer";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Booking from "./components/Booking";
@@ -29,9 +26,7 @@ function App() {
           <Header />
           <div className="app-main">
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/About" element={<About />} />
-
+              <Route path="/" element={<Login />} />
               <Route
                 path="/Register"
                 element={
@@ -103,7 +98,6 @@ function App() {
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </div>
-          <Footer />
         </div>
       </BrowserRouter>
     </AuthProvider>

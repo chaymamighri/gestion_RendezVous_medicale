@@ -25,6 +25,8 @@ function Header() {
   return (
     <header className={`site-header ${isAuthenticated ? "is-auth" : ""}`}>
       <div className="site-header__inner">
+
+        {/* Logo */}
         <Link
           to={isAuthenticated ? dashboardPath : "/"}
           className="site-brand"
@@ -33,9 +35,12 @@ function Header() {
           <span className="site-brand__mark" aria-hidden="true">
             M
           </span>
-          <span className="site-brand__name">Medical Office</span>
+          <span className="site-brand__name">
+            Medical Office
+          </span>
         </Link>
 
+        {/* Mobile menu button */}
         {!isAuthenticated && (
           <button
             type="button"
@@ -50,23 +55,7 @@ function Header() {
           </button>
         )}
 
-        {!isAuthenticated && (
-          <nav className={`site-nav ${menuOpen ? "is-open" : ""}`}>
-            <ul className="site-nav__links">
-              <li>
-                <Link to="/" onClick={closeMenu}>
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/About" onClick={closeMenu}>
-                  About
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        )}
-
+        {/* Public actions */}
         <div
           className={`site-nav__actions ${
             !isAuthenticated && menuOpen ? "is-open" : ""
@@ -75,9 +64,15 @@ function Header() {
           {isAuthenticated ? (
             <>
               <div className="site-nav__user-block">
-                <span className="site-nav__user-label">Logged in</span>
-                <strong className="site-nav__user">{displayName}</strong>
+                <span className="site-nav__user-label">
+                  Logged in
+                </span>
+
+                <strong className="site-nav__user">
+                  {displayName}
+                </strong>
               </div>
+
               <button
                 type="button"
                 className="site-btn site-btn--ghost"
@@ -95,6 +90,7 @@ function Header() {
               >
                 Login
               </Link>
+
               <Link
                 to="/Register"
                 className="site-btn site-btn--primary"
@@ -105,6 +101,7 @@ function Header() {
             </>
           )}
         </div>
+
       </div>
     </header>
   );
